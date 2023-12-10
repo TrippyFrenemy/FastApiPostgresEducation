@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String, TIMESTAMP, MetaData
-from ..database import metadata, Base
+from sqlalchemy import Column, Integer, String, Date
+from ..database import Base
 
 
 class Contact(Base):
@@ -10,5 +10,5 @@ class Contact(Base):
     last_name = Column(String, index=True)
     email = Column(String, unique=True, index=True)
     phone_number = Column(String)
-    birthday = Column(TIMESTAMP)
+    birthday = Column(Date)
     additional_info = Column(String)
