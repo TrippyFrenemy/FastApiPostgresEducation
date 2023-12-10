@@ -69,7 +69,7 @@ async def delete_contact(contact_id: int, db: AsyncSession = Depends(get_async_s
     return {"message": "Contact deleted successfully"}
 
 
-@router.get("/get_by_attr")
+@router.get("/search")
 async def search_contacts(
         name: str = Query(None),
         surname: str = Query(None),
