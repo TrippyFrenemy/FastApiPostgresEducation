@@ -1,5 +1,3 @@
-Звісно, ось приклад файлу `README.md` для вашого проекту REST API для управління контактами, створеного за допомогою FastAPI і SQLAlchemy:
-
 # Contact Management REST API
 
 This project is a REST API for managing contact information, built using FastAPI and SQLAlchemy with PostgreSQL as the database backend. It allows for creating, retrieving, updating, and deleting contact details, as well as searching contacts and fetching contacts with upcoming birthdays.
