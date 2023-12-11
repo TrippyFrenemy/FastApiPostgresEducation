@@ -76,7 +76,6 @@ async def search_contacts(
         email: str = Query(None),
         db: AsyncSession = Depends(get_async_session)
 ):
-    logging.info(f"Received query parameters: name={name}, surname={surname}, email={email}")
     query_conditions = []
 
     if name:
