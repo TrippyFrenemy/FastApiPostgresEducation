@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from operator import and_
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi_limiter.depends import RateLimiter
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from sqlalchemy import select, insert, or_, extract
@@ -13,7 +14,7 @@ from src.database import get_async_session
 router = APIRouter()
 
 
-@router.post("/contacts/", response_model=ContactInDB)
+@router.post("/contacts/", response_model=ContactInDB, dependencies=[Depends(RateLimiter(times=2, seconds=5))])
 async def create_contact(contact: ContactCreate, db: AsyncSession = Depends(get_async_session)):
     new_contact = Contact(**contact.dict())
     db.add(new_contact)
@@ -22,7 +23,7 @@ async def create_contact(contact: ContactCreate, db: AsyncSession = Depends(get_
     return new_contact
 
 
-@router.get("/contacts/", response_model=list[ContactInDB])
+@router.get("/contacts/", response_model=list[ContactInDB], dependencies=[Depends(RateLimiter(times=2, seconds=5))])
 async def read_contacts(db: AsyncSession = Depends(get_async_session)):
     query = select(Contact)
     result = await db.execute(query)
@@ -30,7 +31,7 @@ async def read_contacts(db: AsyncSession = Depends(get_async_session)):
     return contacts
 
 
-@router.get("/contacts/{contact_id}", response_model=ContactInDB)
+@router.get("/contacts/{contact_id}", response_model=ContactInDB, dependencies=[Depends(RateLimiter(times=2, seconds=5))])
 async def read_contact(contact_id: int, db: AsyncSession = Depends(get_async_session)):
     query = select(Contact).where(Contact.id == contact_id)
     result = await db.execute(query)
@@ -40,7 +41,7 @@ async def read_contact(contact_id: int, db: AsyncSession = Depends(get_async_ses
     return contact
 
 
-@router.put("/contacts/{contact_id}", response_model=ContactInDB)
+@router.put("/contacts/{contact_id}", response_model=ContactInDB, dependencies=[Depends(RateLimiter(times=2, seconds=5))])
 async def update_contact(contact_id: int, contact: ContactUpdate, db: AsyncSession = Depends(get_async_session)):
     query = select(Contact).where(Contact.id == contact_id)
     result = await db.execute(query)
@@ -56,7 +57,7 @@ async def update_contact(contact_id: int, contact: ContactUpdate, db: AsyncSessi
     return existing_contact
 
 
-@router.delete("/contacts/{contact_id}")
+@router.delete("/contacts/{contact_id}", dependencies=[Depends(RateLimiter(times=2, seconds=5))])
 async def delete_contact(contact_id: int, db: AsyncSession = Depends(get_async_session)):
     query = select(Contact).where(Contact.id == contact_id)
     result = await db.execute(query)
@@ -69,7 +70,7 @@ async def delete_contact(contact_id: int, db: AsyncSession = Depends(get_async_s
     return {"message": "Contact deleted successfully"}
 
 
-@router.get("/search")
+@router.get("/search", dependencies=[Depends(RateLimiter(times=2, seconds=5))])
 async def search_contacts(
         name: str = Query(None),
         surname: str = Query(None),
@@ -94,7 +95,7 @@ async def search_contacts(
     return contacts
 
 
-@router.get("/upcoming-birthdays")
+@router.get("/upcoming-birthdays", dependencies=[Depends(RateLimiter(times=2, seconds=5))])
 async def upcoming_birthdays(db: AsyncSession = Depends(get_async_session)):
     current_date = datetime.now().date()
     upper_limit = current_date + timedelta(days=7)
