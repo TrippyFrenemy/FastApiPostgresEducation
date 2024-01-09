@@ -13,3 +13,6 @@ REDIS_HOST = os.environ.get("REDIS_HOST")
 
 SECRET = os.environ.get("SECRET")
 SECRET_MANAGER = os.environ.get("SECRET_MANAGER")
+
+SMTP_USER = os.environ.get("SMTP_USER")
+SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")

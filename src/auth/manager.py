@@ -7,6 +7,7 @@ from .models import User
 from .utils import get_user_db
 
 from ..config import SECRET_MANAGER
+from ..tasks.email import send_email_via_smtp
 
 
 class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
@@ -19,12 +20,16 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
     async def on_after_request_verify(
         self, user: User, token: str, request: Optional[Request] = None
     ):
-        print(f"Verification requested for user {user.id}. Verification token: {token}")
+        message = f"Verification requested for user {user.id}. Verification token: {token}"
+        print(message)
+        send_email_via_smtp(message, user)
 
     async def on_after_forgot_password(
         self, user: User, token: str, request: Optional[Request] = None
     ):
-        print(f"User {user.id} has forgot their password. Reset token: {token}")
+        message = f"User {user.id} has forgot their password. Reset token: {token}"
+        print(message)
+        send_email_via_smtp(message, user)
 
     async def create(
         self,
