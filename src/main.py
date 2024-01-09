@@ -48,5 +48,5 @@ app.include_router(
 
 @app.on_event("startup")
 async def startup():
-    redis = aioredis.Redis(host=f"{REDIS_HOST}", port=int(f"{REDIS_PORT}"))
+    redis = aioredis.Redis(host=f"{REDIS_HOST}", port=int(f"{REDIS_PORT}"), decode_responses=True)
     await FastAPILimiter.init(redis)

@@ -11,9 +11,10 @@ This project is a REST API for managing contact information, built using FastAPI
 - PostgreSQL database integration.
 - Asynchronous request handling.
 - Pydantic models for data validation.
-- User features such as login, auth, logout, verify email, reset password
-- SMTP server for verifying email and reset password 
+- User features such as login, auth, logout, verify email, reset password.
+- SMTP server for verifying email and reset password.
 - Auto-generated API documentation using Swagger UI.
+- Docker with all dependencies.
 
 ## Technologies
 
@@ -73,3 +74,20 @@ The API supports the following operations:
 
 
 Refer to the Swagger UI documentation for more details on request and response formats.
+
+### Docker
+
+   To build docker app ise the code below
+
+   ```sh
+   docker build . -t fastapi_app:latest
+   ```
+
+   ```sh
+   docker run -d -p 7329:8000 fastapi_app
+   ```
+
+   ```sh
+
+   ```
+
