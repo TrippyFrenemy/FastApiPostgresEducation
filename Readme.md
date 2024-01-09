@@ -11,6 +11,8 @@ This project is a REST API for managing contact information, built using FastAPI
 - PostgreSQL database integration.
 - Asynchronous request handling.
 - Pydantic models for data validation.
+- Add user features such as login, auth, logout, verify email, reset password
+- Add smtp server for verifying email and reset password 
 - Auto-generated API documentation using Swagger UI.
 
 ## Technologies
@@ -68,5 +70,6 @@ The API supports the following operations:
 - **Delete a Contact**: `DELETE /contacts/{contact_id}`
 - **Search Contacts**: `GET /contacts/search?name=...&surname=...&email=...`
 - **Contacts with Upcoming Birthdays**: `GET /contacts/upcoming-birthdays`
+
 
 Refer to the Swagger UI documentation for more details on request and response formats.
